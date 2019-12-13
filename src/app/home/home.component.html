@@ -7,18 +7,22 @@
     </mat-toolbar-row>
 </mat-toolbar>
 
-<div class="waveform-container">
-    wave ready: {{waveReady}}
-    <mat-progress-bar *ngIf="!waveReady ? true : false" mode="buffer"></mat-progress-bar>
-    <div id="waveform"></div>
-    <div id="wave-timeline"></div>
-</div>
+<div class="main-content">
+    <div class="waveform-container">
+        <div>
+            <p *ngIf="!waveReady">Loading track...</p>
+            <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
+        </div>
+        <div id="waveform"></div>
+        <div id="wave-timeline"></div>
+    </div>
 
-<div class="playback-container">
-    <button mat-icon-button [disabled]="!waveReady" (click)="onPlay()">
-        <mat-icon>play_circle_outline</mat-icon>
-    </button>
-    <button mat-icon-button [disabled]="!waveReady" (click)="onPause()">
-        <mat-icon>pause_circle_outline</mat-icon>
-    </button>
+    <div class="playback-container">
+        <button mat-icon-button [disabled]="!waveReady" (click)="onPlay()">
+            <mat-icon>play_circle_outline</mat-icon>
+        </button>
+        <button mat-icon-button [disabled]="!waveReady" (click)="onPause()">
+            <mat-icon>pause_circle_outline</mat-icon>
+        </button>
+    </div>
 </div>
