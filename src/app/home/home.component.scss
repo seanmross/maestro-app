@@ -1,7 +1,27 @@
+.toolbar-container {
+    margin-bottom: 2em;
+}
+
 .toolbar-spacer {
     flex: 1 1 auto;
 }
 
 .toolbar-icon {
     padding: 0 14px;
+}
+
+.waveform-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#waveform,
+#wave-timeline {
+    width: 75%;
+}
+
+.playback-container {
+    display: flex;
+    justify-content: center;
 }
