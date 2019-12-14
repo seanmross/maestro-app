@@ -28,7 +28,8 @@ export class HomeComponent implements OnInit {
       cursorWidth: 3,
       barWidth: 2,
       barGap: 2,
-      responsive: true
+      responsive: true,
+      height: 0
       // plugins: [
       //   TimelinePlugin.create({
       //     container: '#wave-timeline'
@@ -42,6 +43,7 @@ export class HomeComponent implements OnInit {
     
     this.wave.on('ready', () => {
       this.waveReady = true;
+      this.setWaveHeight(128);
       this.cdr.detectChanges();
     });
     
@@ -58,14 +60,20 @@ export class HomeComponent implements OnInit {
       });
   }
 
-  onPlay() {
-    this.wave.play();
+  setWaveHeight(h: number) {
+    this.wave.setHeight(h);
   }
 
-  onPause() {
-    if (this.isPlaying()) {
-      this.wave.pause();
-    }
+  onPlayPause() {
+    this.wave.playPause();
+  }
+
+  onForward() {
+    this.wave.skip(5);
+  }
+
+  onReplay() {
+    this.wave.skip(-5);
   }
 
   isPlaying(): boolean {

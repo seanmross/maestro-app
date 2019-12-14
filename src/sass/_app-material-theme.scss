@@ -1,0 +1,13 @@
+@import '~@angular/material/theming';
+@import 'app-color-palettes.scss';
+@include mat-core();
+
+$app-primary: mat-palette($maestro-primary-palette);
+$app-accent: mat-palette($maestro-accent-palette);
+$app-warn: mat-palette($maestro-warn-palette);
+
+$app-theme: mat-light-theme($app-primary, $app-accent, $app-warn);
+
+@include angular-material-theme($app-theme);
+
+$app-background: map-get($app-theme, background);

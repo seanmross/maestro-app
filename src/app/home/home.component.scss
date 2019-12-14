@@ -1,3 +1,8 @@
+// Import material theming functions
+@import '~@angular/material/theming';
+// Import custom theme to access color palettes
+@import 'app-material-theme';
+
 .toolbar-container {
     margin-bottom: 2em;
 }
@@ -18,4 +23,38 @@
 
 #waveform {
     cursor: pointer;
+}
+
+.waveform-container {
+    padding: 0.5em;
+}
+
+.waveform-loading {
+    margin: 2em 0;
+}
+
+.playback-container {
+    background: mat-color($app-background);
+}
+
+.playback-controls {
+    display: flex;
+    justify-content: center;
+}
+
+.mat-icon.playback-icon-l {
+    font-size: 48px;
+}
+
+.mat-icon.playback-icon-s {
+    font-size: 36px;
+}
+
+.playback-btn {
+    margin: 0 0.5em;
+}
+
+.play-pause {
+    height: 48px;
+    width: 48px;
 }

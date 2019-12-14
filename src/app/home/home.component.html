@@ -1,6 +1,6 @@
 <mat-toolbar color="primary" class="toolbar-container">
     <mat-toolbar-row>
-        <span>maestro</span>
+        <span>maestro-app</span>
         <span class="toolbar-spacer"></span>
         <mat-icon class="toolbar-icon">account_circle</mat-icon>
         <mat-icon class="toolbar-icon">settings_applications</mat-icon>
@@ -8,8 +8,9 @@
 </mat-toolbar>
 
 <div class="main-content">
+    <!-- Waveform -->
     <div class="waveform-container">
-        <div>
+        <div class="waveform-loading">
             <p *ngIf="!waveReady">Loading track...</p>
             <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
         </div>
@@ -17,12 +18,19 @@
         <div id="wave-timeline"></div>
     </div>
 
-    <div class="playback-container">
-        <button mat-icon-button [disabled]="!waveReady" (click)="onPlay()">
-            <mat-icon>play_circle_outline</mat-icon>
-        </button>
-        <button mat-icon-button [disabled]="!waveReady" (click)="onPause()">
-            <mat-icon>pause_circle_outline</mat-icon>
-        </button>
-    </div>
+    <!-- Playback controls -->
+    <mat-toolbar class="playback-container">
+        <mat-toolbar-row class="playback-controls">
+            <button mat-icon-button [disabled]="!waveReady" (click)="onReplay()" class="playback-btn">
+                <mat-icon class="playback-icon-s" [inline]="true">replay_5</mat-icon>
+            </button>
+            <button mat-icon-button [disabled]="!waveReady" (click)="onPlayPause()" class="playback-btn play-pause">
+                <mat-icon *ngIf="!isPlaying()" class="playback-icon-l" [inline]="true">play_circle_outline</mat-icon>
+                <mat-icon *ngIf="isPlaying()" class="playback-icon-l" [inline]="true">pause_circle_outline</mat-icon>
+            </button>
+            <button mat-icon-button [disabled]="!waveReady" (click)="onForward()" class="playback-btn">
+                <mat-icon class="playback-icon-s" [inline]="true">forward_5</mat-icon>
+            </button>
+        </mat-toolbar-row>
+    </mat-toolbar>
 </div>
