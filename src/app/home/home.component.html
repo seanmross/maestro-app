@@ -14,8 +14,13 @@
             <p *ngIf="!waveReady">Loading track...</p>
             <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
         </div>
-        <div id="waveform"></div>
-        <div id="wave-timeline"></div>
+
+        <div class="waveform">
+            <div>{{ counter }}</div>
+            <div id="waveform"></div>
+            <div>{{ duration }}</div>
+        </div>
+
     </div>
 
     <!-- Playback controls -->

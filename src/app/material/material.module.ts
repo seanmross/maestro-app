@@ -1,5 +1,6 @@
 import { NgModule } from "@angular/core";
 import { 
+    MatGridListModule,
     MatProgressBarModule,
     MatButtonModule,
     MatIconModule,
@@ -9,12 +10,14 @@ import {
 
 @NgModule({
     imports: [
+        MatGridListModule,
         MatProgressBarModule,
         MatButtonModule,
         MatIconModule,
         MatToolbarModule,
     ],
     exports: [
+        MatGridListModule,
         MatProgressBarModule,
         MatButtonModule,
         MatIconModule,
