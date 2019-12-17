@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Renderer, ViewChild, ElementRef, Renderer2 } from '@angular/core';
 import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import WaveSurfer from 'wavesurfer.js';
 import CursorPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js';
@@ -11,11 +11,20 @@ import CursorPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js';
 export class HomeComponent implements OnInit {
   wave: WaveSurfer;
   waveReady = false;
-  duration = '00:00';
-  counter = '00:00';
+  duration = '00:00:00';
+  counter = '00:00:00';
+  activeHighlight = `(3:04) "Neque sodales ut etiam sit amet nisl purus in mollis nunc sed id semper 
+    risus in hendrerit gravida rutrum quisque."`;
+
+  @ViewChild('waveRef', { static: false }) waveRef: ElementRef;
+  @ViewChild('canvas', { static: false }) canvas: ElementRef;
+  @ViewChild('highlightArea', { static: false }) highlightArea: ElementRef;
+
+  highlights = [];
 
   constructor(
     private cdr: ChangeDetectorRef,
+    private renderer: Renderer2
   ) { }
 
   ngOnInit() {
@@ -55,12 +64,30 @@ export class HomeComponent implements OnInit {
     
     this.wave.on('ready', () => {
       this.waveReady = true;
-      this.wave.setHeight(128);
+      this.wave.setHeight(200);
       this.duration = this.getDuration();
+      /**
+       * Manually detect changes
+       * Angular won't update property bindings from waveform events
+       */
       this.cdr.detectChanges();
     });
 
     this.wave.load('assets/mp3/akshay_nanavati.mp3');
+  }
+
+  onAddHighlight() {
+    // const currentTime = this.wave.getCurrentTime();
+    // const duration = this.wave.getDuration();
+    // const waveWidth = this.wave.drawer.width;
+    // const highlightX = (currentTime / duration) * waveWidth;
+    const len = this.highlights.length;
+    this.highlights.push({ id: len, text: `highlight id: ${len}`});
+    this.cdr.detectChanges();
+  }
+
+  onHighlightClick(id: number) {
+    console.log(this.highlights[id]['text'])
   }
 
   formatCursorTime(sec: number): string {

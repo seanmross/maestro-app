@@ -3,32 +3,28 @@
 // Import custom theme to access color palettes
 @import 'app-material-theme';
 
-.toolbar-container {
-    margin-bottom: 2em;
-}
-
-.toolbar-spacer {
-    flex: 1 1 auto;
-}
-
-.toolbar-icon {
-    padding: 0 14px;
-}
-
 .main-content {
-    max-width: 1240px;
-    min-width: 960px;
-    width: 960px;
+    max-width: 960px;
+    min-width: 860px;
+    height: 100%;
     margin: 0 auto;
+}
+
+.active-highlight-text {
+    font-size: 2em;
+    font-weight: 700;
+    padding: 0 1em;
+    text-align: center;
+}
+
+.waveform-top-half {
+    height: 100px;
+    overflow: hidden;
 }
 
 #waveform {
     cursor: pointer;
     position: relative; // !! Wihout this, cursor position is off
-}
-
-.waveform-container {
-    padding: 0.5em;
 }
 
 .waveform-loading {

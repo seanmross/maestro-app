@@ -1,27 +1,37 @@
-<mat-toolbar color="primary" class="toolbar-container">
-    <mat-toolbar-row>
-        <span>maestro-app</span>
-        <span class="toolbar-spacer"></span>
-        <mat-icon class="toolbar-icon">account_circle</mat-icon>
-        <mat-icon class="toolbar-icon">settings_applications</mat-icon>
-    </mat-toolbar-row>
-</mat-toolbar>
+<app-toolbar></app-toolbar>
 
 <div class="main-content">
-    <!-- Waveform -->
-    <div class="waveform-container">
+    <!-- Active highlight -->
+    <div class="active-highlight-text">{{ activeHighlight }}</div>
+
+    <!-- Player area -->
+    <div class="playerArea">
+        <!-- <div class="highlightArea"></div> -->
+
         <div class="waveform-loading">
             <p *ngIf="!waveReady">Loading track...</p>
             <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
         </div>
 
-        <div class="waveform">
+        <!-- <div class="waveform">
             <div>{{ counter }}</div>
-            <div id="waveform"></div>
             <div>{{ duration }}</div>
-        </div>
+        </div> -->
 
+        <button mat-button (click)="onAddHighlight()">add highlight</button>
+
+        <div class="waveform-top-half">
+            <div #waveRef id="waveform"></div>
+        </div>
+        <div #highlightArea class="highlightArea">
+            <button *ngFor="let highlight of highlights; let i = index" id="highlight-{{i}}" (click)="onHighlightClick(i)">
+                <mat-icon>mic</mat-icon>
+            </button>
+        </div>
+        
     </div>
+    <!-- Show info -->
+
 
     <!-- Playback controls -->
     <mat-toolbar class="playback-container">
