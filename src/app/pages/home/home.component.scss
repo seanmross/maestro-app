@@ -10,25 +10,56 @@
     margin: 0 auto;
 }
 
-.active-highlight-text {
-    font-size: 2em;
-    font-weight: 700;
-    padding: 0 1em;
+.active-hl-banner {
+    display: flex;
+    flex-direction: column;
     text-align: center;
+    padding: 0 1.5em;
+    &--top {
+        font-size: 2em;
+        font-weight: 700;
+        height: 152px;
+        display: flex;
+        align-items: flex-end;
+    } 
+    &--bottom {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-top: 0.5em;
+        height: 56px;
+        mat-icon {
+            font-size: 48px;
+        }
+        div {
+            font-size: 14px;
+        }
+    }
 }
 
-.waveform-top-half {
-    height: 100px;
-    overflow: hidden;
+.waveform {
+    &--holder {
+        height: 100px;
+        overflow: hidden;
+    }
+    &--loading {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        div {
+            padding: 0.5em;
+        }
+    }
 }
 
 #waveform {
     cursor: pointer;
-    position: relative; // !! Wihout this, cursor position is off
+    position: relative; // !! Wihout this, cursor position is out of place
 }
 
-.waveform-loading {
-    margin: 2em 0;
+.highlight-area {
+    display: flex;
+    flex-direction: column;
 }
 
 .playback-container {

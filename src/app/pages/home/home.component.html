@@ -2,50 +2,53 @@
 
 <div class="main-content">
     <!-- Active highlight -->
-    <div class="active-highlight-text">{{ activeHighlight }}</div>
+    <div class="active-hl-banner">
+        <div class="active-hl-banner--top">{{ activeHlText }}</div>
+        <div class="active-hl-banner--bottom">
+            <mat-icon *ngIf="activeHlTime" [inline]="true">mic</mat-icon>
+            <div *ngIf="activeHlTime">({{ activeHlTime }})</div>
+        </div>
+    </div>
 
     <!-- Player area -->
-    <div class="playerArea">
-        <!-- <div class="highlightArea"></div> -->
-
-        <div class="waveform-loading">
-            <p *ngIf="!waveReady">Loading track...</p>
-            <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
-        </div>
-
-        <!-- <div class="waveform">
-            <div>{{ counter }}</div>
-            <div>{{ duration }}</div>
-        </div> -->
-
-        <button mat-button (click)="onAddHighlight()">add highlight</button>
-
-        <div class="waveform-top-half">
-            <div #waveRef id="waveform"></div>
-        </div>
-        <div #highlightArea class="highlightArea">
-            <button *ngFor="let highlight of highlights; let i = index" id="highlight-{{i}}" (click)="onHighlightClick(i)">
-                <mat-icon>mic</mat-icon>
-            </button>
+    <div class="player-area">
+        <!-- Waveform -->
+        <div class="waveform">
+            <div class="waveform--holder">
+                <div class="waveform--loading">
+                    <div *ngIf="!waveReady">Loading track...</div>
+                    <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
+                </div>
+                <div #waveRef id="waveform"></div>
+            </div>
         </div>
         
+        <!-- Highlights -->
+        <div class="highlight-area" *ngIf="waveReady">
+            <app-highlight-banner 
+                [highlights]="highlights" 
+                (highlightClicked)="onHighlightClicked($event)">
+            </app-highlight-banner>
+            <div>
+                <button mat-button (click)="onAddHighlight()">add highlight</button>
+            </div>
+        </div>
+
+        <!-- Playback controls -->
+        <mat-toolbar class="playback-container">
+            <mat-toolbar-row class="playback-controls">
+                <button mat-icon-button [disabled]="!waveReady" (click)="onReplay()" class="playback-btn">
+                    <mat-icon class="playback-icon-s" [inline]="true">replay_5</mat-icon>
+                </button>
+                <button mat-icon-button [disabled]="!waveReady" (click)="onPlayPause()" class="playback-btn play-pause">
+                    <mat-icon *ngIf="!isPlaying()" class="playback-icon-l" [inline]="true">play_circle_outline</mat-icon>
+                    <mat-icon *ngIf="isPlaying()" class="playback-icon-l" [inline]="true">pause_circle_outline</mat-icon>
+                </button>
+                <button mat-icon-button [disabled]="!waveReady" (click)="onForward()" class="playback-btn">
+                    <mat-icon class="playback-icon-s" [inline]="true">forward_5</mat-icon>
+                </button>
+            </mat-toolbar-row>
+        </mat-toolbar>
     </div>
-    <!-- Show info -->
 
-
-    <!-- Playback controls -->
-    <mat-toolbar class="playback-container">
-        <mat-toolbar-row class="playback-controls">
-            <button mat-icon-button [disabled]="!waveReady" (click)="onReplay()" class="playback-btn">
-                <mat-icon class="playback-icon-s" [inline]="true">replay_5</mat-icon>
-            </button>
-            <button mat-icon-button [disabled]="!waveReady" (click)="onPlayPause()" class="playback-btn play-pause">
-                <mat-icon *ngIf="!isPlaying()" class="playback-icon-l" [inline]="true">play_circle_outline</mat-icon>
-                <mat-icon *ngIf="isPlaying()" class="playback-icon-l" [inline]="true">pause_circle_outline</mat-icon>
-            </button>
-            <button mat-icon-button [disabled]="!waveReady" (click)="onForward()" class="playback-btn">
-                <mat-icon class="playback-icon-s" [inline]="true">forward_5</mat-icon>
-            </button>
-        </mat-toolbar-row>
-    </mat-toolbar>
 </div>

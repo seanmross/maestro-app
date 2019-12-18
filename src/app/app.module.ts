@@ -9,12 +9,15 @@ import { HomeComponent } from './pages/home/home.component';
 import { MaterialModule } from './material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ToolbarComponent } from './custom-components/toolbar/toolbar.component';
+import { HighlightBannerComponent } from './custom-components/highlight-banner/highlight-banner.component';
+import { HighlightService } from './services/highlight.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     ToolbarComponent,
+    HighlightBannerComponent,
   ],
   imports: [
     LayoutModule,
@@ -23,7 +26,7 @@ import { ToolbarComponent } from './custom-components/toolbar/toolbar.component'
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [],
+  providers: [HighlightService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

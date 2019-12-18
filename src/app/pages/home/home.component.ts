@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef, Renderer, ViewChild, ElementRef, 
 import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import WaveSurfer from 'wavesurfer.js';
 import CursorPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js';
+import { Highlight } from '../../shared/highlight';
+import { HighlightService } from '../../services/highlight.service';
 
 @Component({
   selector: 'app-home',
@@ -11,20 +13,19 @@ import CursorPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js';
 export class HomeComponent implements OnInit {
   wave: WaveSurfer;
   waveReady = false;
-  duration = '00:00:00';
-  counter = '00:00:00';
-  activeHighlight = `(3:04) "Neque sodales ut etiam sit amet nisl purus in mollis nunc sed id semper 
-    risus in hendrerit gravida rutrum quisque."`;
+  // duration = '00:00:00';
+  // counter = '00:00:00';
+  activeHlText: string;
+  activeHlTime: string;
 
   @ViewChild('waveRef', { static: false }) waveRef: ElementRef;
-  @ViewChild('canvas', { static: false }) canvas: ElementRef;
-  @ViewChild('highlightArea', { static: false }) highlightArea: ElementRef;
 
-  highlights = [];
+  highlights: Highlight[];
 
   constructor(
     private cdr: ChangeDetectorRef,
-    private renderer: Renderer2
+    private renderer: Renderer2,
+    private hlService: HighlightService
   ) { }
 
   ngOnInit() {
@@ -65,7 +66,8 @@ export class HomeComponent implements OnInit {
     this.wave.on('ready', () => {
       this.waveReady = true;
       this.wave.setHeight(200);
-      this.duration = this.getDuration();
+      // this.duration = this.getDuration();
+      this.highlights = this.hlService.getHighlights();
       /**
        * Manually detect changes
        * Angular won't update property bindings from waveform events
@@ -76,27 +78,38 @@ export class HomeComponent implements OnInit {
     this.wave.load('assets/mp3/akshay_nanavati.mp3');
   }
 
+  onHighlightClicked(highlight: Highlight) {
+    console.log('added new highlight: ', highlight)
+    this.activeHlText = highlight.text;
+    this.activeHlTime = this.formatTime(highlight.timeSeconds);
+    this.cdr.detectChanges();
+  }
+
   onAddHighlight() {
     // const currentTime = this.wave.getCurrentTime();
     // const duration = this.wave.getDuration();
     // const waveWidth = this.wave.drawer.width;
     // const highlightX = (currentTime / duration) * waveWidth;
-    const len = this.highlights.length;
-    this.highlights.push({ id: len, text: `highlight id: ${len}`});
+    const nextId = this.highlights.length + 1;
+    this.highlights.push({
+      id: nextId,
+      episodeId: 0,
+      timeSeconds: 0,
+      text: `I am a new highlight. My highlight id is: ${nextId}`
+    });
     this.cdr.detectChanges();
   }
 
-  onHighlightClick(id: number) {
-    console.log(this.highlights[id]['text'])
-  }
-
-  formatCursorTime(sec: number): string {
-    // hh:mm:ss
-    return [
-      ('00' + Math.floor(sec / 3600)).slice(-2), // hours
-      ('00' + Math.floor((sec % 3600) / 60)).slice(-2), // minutes
-      ('00' + Math.floor(sec % 60)).slice(-2) // seconds
-    ].join(':');
+  formatTime(sec: number): string {
+    // h:m:ss
+    let time = [];
+    let h = sec > 3600 ? Math.floor(sec / 3600) : null;
+    if (h) time.push(h);
+    let m = Math.floor((sec % 3600) / 60);
+    time.push(m);
+    let ss = ('00' + Math.floor(sec % 60)).slice(-2);
+    time.push(ss);
+    return time.join(':');
   }
 
   getDuration(): string {
