@@ -9,7 +9,7 @@ import { HomeComponent } from './pages/home/home.component';
 import { MaterialModule } from './material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ToolbarComponent } from './custom-components/toolbar/toolbar.component';
-import { HighlightBannerComponent } from './custom-components/highlight-banner/highlight-banner.component';
+import { HighlightPopoverComponent } from './custom-components/highlight-popover/highlight-popover.component';
 import { HighlightService } from './services/highlight.service';
 
 @NgModule({
@@ -17,7 +17,7 @@ import { HighlightService } from './services/highlight.service';
     AppComponent,
     HomeComponent,
     ToolbarComponent,
-    HighlightBannerComponent,
+    HighlightPopoverComponent,
   ],
   imports: [
     LayoutModule,

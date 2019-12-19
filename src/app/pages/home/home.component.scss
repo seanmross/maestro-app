@@ -4,8 +4,9 @@
 @import 'app-material-theme';
 
 .main-content {
-    max-width: 960px;
-    min-width: 860px;
+    // max-width: 960px;
+    // min-width: 860px;
+    width: 960px;
     height: 100%;
     margin: 0 auto;
 }
@@ -13,14 +14,15 @@
 .active-hl-banner {
     display: flex;
     flex-direction: column;
-    text-align: center;
     padding: 0 1.5em;
     &--top {
         font-size: 2em;
         font-weight: 700;
-        height: 152px;
+        height: 172px;
         display: flex;
         align-items: flex-end;
+        justify-content: center;
+        text-align: center;
     } 
     &--bottom {
         display: flex;
@@ -38,7 +40,11 @@
 }
 
 .waveform {
-    &--holder {
+    display: flex;
+    &--container {
+        width: 840px;
+    }
+    &--wrapper {
         height: 100px;
         overflow: hidden;
     }
@@ -50,16 +56,29 @@
             padding: 0.5em;
         }
     }
+    &--highlight-popover {
+        display: flex;
+        flex-direction: column;
+    }
+    &--counter,
+    &--duration {
+        font-size: 14px;
+        padding-top: 84px;
+        width: 65px;
+    }
+    &--counter {
+        text-align: right;
+        padding-right: 0.5em;
+    }
+    &--duration {
+        text-align: left;
+        padding-left: 0.5em;
+    }
 }
 
 #waveform {
     cursor: pointer;
     position: relative; // !! Wihout this, cursor position is out of place
-}
-
-.highlight-area {
-    display: flex;
-    flex-direction: column;
 }
 
 .playback-container {

@@ -13,8 +13,8 @@ import { HighlightService } from '../../services/highlight.service';
 export class HomeComponent implements OnInit {
   wave: WaveSurfer;
   waveReady = false;
-  // duration = '00:00:00';
-  // counter = '00:00:00';
+  duration: string;
+  counter: string;
   activeHlText: string;
   activeHlTime: string;
 
@@ -62,16 +62,33 @@ export class HomeComponent implements OnInit {
         })
       ],
     });
-    
+
+    /**
+     * Manually detect changes using cdr
+     * Angular won't update property bindings from waveform events
+     */
     this.wave.on('ready', () => {
       this.waveReady = true;
       this.wave.setHeight(200);
-      // this.duration = this.getDuration();
+      this.duration = this.getDuration();
+      this.counter = '0:00';
       this.highlights = this.hlService.getHighlights();
-      /**
-       * Manually detect changes
-       * Angular won't update property bindings from waveform events
-       */
+      this.cdr.detectChanges();
+    });
+
+    // Update play/pause button
+    this.wave.on('finish', () => {
+      this.cdr.detectChanges();
+    });
+
+    this.wave.on('audioprocess', () => {
+      this.counter = this.formatTime(this.wave.getCurrentTime());
+      this.cdr.detectChanges();
+    });
+
+    this.wave.on('seek', () => {
+      console.log(this.wave.getCurrentTime())
+      this.counter = this.formatTime(this.wave.getCurrentTime());
       this.cdr.detectChanges();
     });
 
@@ -101,19 +118,28 @@ export class HomeComponent implements OnInit {
   }
 
   formatTime(sec: number): string {
-    // h:m:ss
+    /**
+     * m:ss or h:mm:ss
+     * e.g. 6:13, 1:06:13
+     */
+
     let time = [];
     let h = sec > 3600 ? Math.floor(sec / 3600) : null;
-    if (h) time.push(h);
     let m = Math.floor((sec % 3600) / 60);
-    time.push(m);
+    if (h) {
+      time.push(h);
+      let mm = ('00' + Math.floor((sec % 3600) / 60)).slice(-2);
+      time.push(mm);
+    } else {
+      time.push(m);
+    }
     let ss = ('00' + Math.floor(sec % 60)).slice(-2);
     time.push(ss);
     return time.join(':');
   }
 
   getDuration(): string {
-    return new Date(this.wave.getDuration() * 1000).toISOString().substr(11, 8);
+    return this.formatTime(this.wave.getDuration());
   }
 
   onPlayPause() {
