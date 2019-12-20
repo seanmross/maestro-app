@@ -21,7 +21,8 @@
                         <div *ngIf="!waveReady">Loading track...</div>
                         <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
                     </div>
-                    <div #waveRef id="waveform"></div>
+                    <div id="wave-minimap"></div>
+                    <div id="waveform"></div>
                 </div>
                 <!-- Highlights -->
                 <div class="waveform--highlight-popover" *ngIf="waveReady">

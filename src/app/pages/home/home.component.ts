@@ -2,6 +2,8 @@ import { Component, OnInit, ChangeDetectorRef, Renderer, ViewChild, ElementRef, 
 import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import WaveSurfer from 'wavesurfer.js';
 import CursorPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js';
+import MinimapPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.minimap.min.js';
+import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 import { Highlight } from '../../shared/highlight';
 import { HighlightService } from '../../services/highlight.service';
 
@@ -18,8 +20,6 @@ export class HomeComponent implements OnInit {
   activeHlText: string;
   activeHlTime: string;
 
-  @ViewChild('waveRef', { static: false }) waveRef: ElementRef;
-
   highlights: Highlight[];
 
   constructor(
@@ -34,12 +34,14 @@ export class HomeComponent implements OnInit {
       progressColor: '#57a260',
       waveColor: '#8e8e8e',
       cursorColor: '#ec407a',
-      cursorWidth: 3,
+      cursorWidth: 2,
       barWidth: 3,
       barRadius: 3,
       barGap: 2,
       responsive: true,
       height: 0,
+      scrollParent: true,
+      // autoCenterRate: 10,
       plugins: [
         CursorPlugin.create({
           container: '#waveform',
@@ -59,6 +61,26 @@ export class HomeComponent implements OnInit {
           // formatTimeCallback: (sec: number) => {
           //   return this.formatCursorTime(sec);
           // }
+        }),
+        MinimapPlugin.create({
+          container: '#wave-minimap',
+          progressColor: '#57a260',
+          waveColor: '#8e8e8e',
+          cursorWidth: 2,
+          barWidth: 1,
+          barRadius: 1,
+          barGap: 0.5,
+          height: 50,
+        }),
+        RegionsPlugin.create({
+          regions: [
+            {
+              start: 271,
+              end: 275,
+              loop: false,
+              color: 'hsla(200, 50%, 70%, 0.4)'
+            }
+          ],
         })
       ],
     });
@@ -73,6 +95,9 @@ export class HomeComponent implements OnInit {
       this.duration = this.getDuration();
       this.counter = '0:00';
       this.highlights = this.hlService.getHighlights();
+
+      this.addDivToWave()
+
       this.cdr.detectChanges();
     });
 
@@ -93,6 +118,16 @@ export class HomeComponent implements OnInit {
     });
 
     this.wave.load('assets/mp3/akshay_nanavati.mp3');
+  }
+
+  addDivToWave() {
+    let div = document.createElement('div');
+    div.innerHTML = 'highlight';
+    div.setAttribute('position', 'absolute');
+    div.setAttribute('left', '61px');
+    div.setAttribute('top', '2px');
+    document.getElementById('waveform').appendChild(div);
+
   }
 
   onHighlightClicked(highlight: Highlight) {

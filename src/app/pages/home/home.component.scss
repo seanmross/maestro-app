@@ -45,7 +45,7 @@
         width: 840px;
     }
     &--wrapper {
-        height: 100px;
+        height: 150px;
         overflow: hidden;
     }
     &--loading {
@@ -63,7 +63,7 @@
     &--counter,
     &--duration {
         font-size: 14px;
-        padding-top: 84px;
+        padding-top: 14px;
         width: 65px;
     }
     &--counter {
@@ -76,7 +76,8 @@
     }
 }
 
-#waveform {
+#waveform,
+#wave-minimap {
     cursor: pointer;
     position: relative; // !! Wihout this, cursor position is out of place
 }

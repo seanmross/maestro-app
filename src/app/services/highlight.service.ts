@@ -7,9 +7,8 @@ export class HighlightService {
         {
             id: 0,
             episodeId: 0,
-            timeSeconds: 184,
-            text: `"vestibulum rhoncus est pellentesque elit ullamcorper dignissim cras tincidunt 
-            lobortis feugiat vivamus."`
+            timeSeconds: 271,
+            text: `"Finding the light in the darkness, learning to work with that stuff."`
         },
         {
             id: 1,
