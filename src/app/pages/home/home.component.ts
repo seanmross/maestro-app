@@ -6,6 +6,8 @@ import MinimapPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.minimap.min.js';
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 import { Highlight } from '../../shared/highlight';
 import { HighlightService } from '../../services/highlight.service';
+import { Chart } from 'chart.js';
+import 'chartjs-plugin-zoom';
 
 @Component({
   selector: 'app-home',
@@ -95,8 +97,12 @@ export class HomeComponent implements OnInit {
       this.duration = this.getDuration();
       this.counter = '0:00';
       this.highlights = this.hlService.getHighlights();
+      this.cdr.detectChanges();
 
-      this.addDivToWave()
+      // Todo: remove
+      // this.addDivToWave();
+
+      this.createChart();
 
       this.cdr.detectChanges();
     });
@@ -120,15 +126,79 @@ export class HomeComponent implements OnInit {
     this.wave.load('assets/mp3/akshay_nanavati.mp3');
   }
 
-  addDivToWave() {
-    let div = document.createElement('div');
-    div.innerHTML = 'highlight';
-    div.setAttribute('position', 'absolute');
-    div.setAttribute('left', '61px');
-    div.setAttribute('top', '2px');
-    document.getElementById('waveform').appendChild(div);
+  createChart() {
+    let ctx = document.getElementById('myChart') as HTMLCanvasElement;
+    ctx.parentElement.style.height = '100px';
 
+    let dur = this.wave.getDuration();
+
+    let chart = new Chart(ctx.getContext('2d'), {
+      type: 'scatter',
+      data: {
+        datasets: [{
+          data: [{
+            x: 12,
+            y: 1
+          }, {
+            x: 24,
+            y: 1
+          }, {
+            x: 72,
+            y: 1
+          }]
+        }]
+      },
+      options: {
+        maintainAspectRatio: false,
+        scales: {
+          xAxes: [{
+            type: 'linear',
+            position: 'bottom'
+          }],
+          yAxes: [{
+            ticks: {
+              min: 0,
+              max: 2,
+              stepSize: 2
+            }
+          }]
+        },
+        plugins: {
+          zoom: {
+            pan: {
+              enabled: true,
+              mode: 'x',
+              rangeMin: {
+                x: 0,
+              },
+              rangeMax: {
+                x: dur,
+              },
+            },
+            zoom: {
+              enabled: true,
+              mode: 'x',
+              rangeMin: {
+                x: 0,
+              },
+              rangeMax: {
+                x: dur,
+              },
+            }
+          }
+        },  
+      },
+    })
   }
+
+  // addDivToWave() {
+  //   let div = document.createElement('div');
+  //   div.innerHTML = 'highlight';
+  //   div.setAttribute('position', 'absolute');
+  //   div.setAttribute('left', '61px');
+  //   div.setAttribute('top', '2px');
+  //   document.getElementById('waveform').appendChild(div);
+  // }
 
   onHighlightClicked(highlight: Highlight) {
     console.log('added new highlight: ', highlight)

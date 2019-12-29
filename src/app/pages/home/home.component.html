@@ -16,6 +16,11 @@
         <div class="waveform">
             <div class="waveform--counter">{{ counter }}</div>
             <div class="waveform--container">
+                <!-- Chart -->
+                <div class="chart-container" style="position: relative;">
+                    <canvas id="myChart" *ngIf="waveReady"></canvas>
+                </div>
+
                 <div class="waveform--wrapper">
                     <div class="waveform--loading">
                         <div *ngIf="!waveReady">Loading track...</div>
