@@ -1,13 +1,38 @@
-import { Component, OnInit, ChangeDetectorRef, Renderer, ViewChild, ElementRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
+
 import WaveSurfer from 'wavesurfer.js';
 import CursorPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js';
 import MinimapPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.minimap.min.js';
 import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
+
 import { Highlight } from '../../shared/highlight';
 import { HighlightService } from '../../services/highlight.service';
 import { Chart } from 'chart.js';
 import 'chartjs-plugin-zoom';
+
+const repositoriesData = [
+  // {
+  //     name: 'admin-on-rest',
+  //     data: [{ date: new Date('2019/12/20 14:21:31') } /* ... */],
+  // },
+  // {
+  //     name: 'event-drops',
+  //     data: [{ date: new Date('2019/12/20 13:24:57') } /* ... */],
+  // },
+  // {
+  //     name: 'sedy',
+  //     data: [{ date: new Date('2019/12/20 13:25:12') } /* ... */],
+  // },
+  {
+    name: 'my-podcast',
+    data: [
+      new Date('2019/12/20 00:12:13'),
+      new Date('2019/12/20 01:03:57'),
+      new Date('2019/12/20 00:45:31')
+    ],
+  },
+];
 
 @Component({
   selector: 'app-home',
@@ -73,6 +98,18 @@ export class HomeComponent implements OnInit {
           barRadius: 1,
           barGap: 0.5,
           height: 50,
+          plugins: [
+            RegionsPlugin.create({
+              regions: [
+                {
+                  start: 271,
+                  end: 275,
+                  loop: false,
+                  color: 'hsla(200, 50%, 70%, 0.4)'
+                }
+              ],
+            })
+          ]
         }),
         RegionsPlugin.create({
           regions: [

@@ -21,8 +21,13 @@
     "@angular/platform-browser": "~8.0.0",
     "@angular/platform-browser-dynamic": "~8.0.0",
     "@angular/router": "~8.0.0",
+<<<<<<< HEAD
     "chart.js": "^2.9.3",
     "chartjs-plugin-zoom": "^0.7.5",
+=======
+    "d3": "^5.14.2",
+    "event-drops": "^1.3.0",
+>>>>>>> 5189c1896a157c9e7a3b94cf9e93828184af12d5
     "hammerjs": "^2.0.8",
     "ng2-charts": "^2.3.0",
     "rxjs": "~6.4.0",
