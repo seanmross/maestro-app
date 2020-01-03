@@ -2,37 +2,14 @@ import { Component, OnInit, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 
 import WaveSurfer from 'wavesurfer.js';
-import CursorPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.cursor.min.js';
-import MinimapPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.minimap.min.js';
-import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
+import { waveConfig } from './constants/wave-config';
 
 import { Highlight } from '../../shared/highlight';
 import { HighlightService } from '../../services/highlight.service';
+
 import { Chart } from 'chart.js';
 import 'chartjs-plugin-zoom';
-
-const repositoriesData = [
-  // {
-  //     name: 'admin-on-rest',
-  //     data: [{ date: new Date('2019/12/20 14:21:31') } /* ... */],
-  // },
-  // {
-  //     name: 'event-drops',
-  //     data: [{ date: new Date('2019/12/20 13:24:57') } /* ... */],
-  // },
-  // {
-  //     name: 'sedy',
-  //     data: [{ date: new Date('2019/12/20 13:25:12') } /* ... */],
-  // },
-  {
-    name: 'my-podcast',
-    data: [
-      new Date('2019/12/20 00:12:13'),
-      new Date('2019/12/20 01:03:57'),
-      new Date('2019/12/20 00:45:31')
-    ],
-  },
-];
+import { chartConfig } from './constants/chart-config';
 
 @Component({
   selector: 'app-home',
@@ -41,6 +18,7 @@ const repositoriesData = [
 })
 export class HomeComponent implements OnInit {
   wave: WaveSurfer;
+  chart: any;
   waveReady = false;
   duration: string;
   counter: string;
@@ -56,73 +34,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.wave = WaveSurfer.create({
-      container: '#waveform',
-      progressColor: '#57a260',
-      waveColor: '#8e8e8e',
-      cursorColor: '#ec407a',
-      cursorWidth: 2,
-      barWidth: 3,
-      barRadius: 3,
-      barGap: 2,
-      responsive: true,
-      height: 0,
-      scrollParent: true,
-      // autoCenterRate: 10,
-      plugins: [
-        CursorPlugin.create({
-          container: '#waveform',
-          opacity: 1,
-          /**
-           * hide cursor time until wavesurfer v3.3.0 release
-           * github issue #1802
-           */
-          // showTime: true,
-          // followCursorY: true,
-          // customShowTimeStyle: {
-          //   'background-color': '#000',
-          //   'color': '#fff',
-          //   'font-size': '12px',
-          //   'padding': '0.25em 0.5em'
-          // },
-          // formatTimeCallback: (sec: number) => {
-          //   return this.formatCursorTime(sec);
-          // }
-        }),
-        MinimapPlugin.create({
-          container: '#wave-minimap',
-          progressColor: '#57a260',
-          waveColor: '#8e8e8e',
-          cursorWidth: 2,
-          barWidth: 1,
-          barRadius: 1,
-          barGap: 0.5,
-          height: 50,
-          plugins: [
-            RegionsPlugin.create({
-              regions: [
-                {
-                  start: 271,
-                  end: 275,
-                  loop: false,
-                  color: 'hsla(200, 50%, 70%, 0.4)'
-                }
-              ],
-            })
-          ]
-        }),
-        RegionsPlugin.create({
-          regions: [
-            {
-              start: 271,
-              end: 275,
-              loop: false,
-              color: 'hsla(200, 50%, 70%, 0.4)'
-            }
-          ],
-        })
-      ],
-    });
+    this.wave = WaveSurfer.create(waveConfig);
 
     /**
      * Manually detect changes using cdr
@@ -136,9 +48,6 @@ export class HomeComponent implements OnInit {
       this.highlights = this.hlService.getHighlights();
       this.cdr.detectChanges();
 
-      // Todo: remove
-      // this.addDivToWave();
-
       this.createChart();
 
       this.cdr.detectChanges();
@@ -149,13 +58,14 @@ export class HomeComponent implements OnInit {
       this.cdr.detectChanges();
     });
 
+    // Update counter every second
     this.wave.on('audioprocess', () => {
       this.counter = this.formatTime(this.wave.getCurrentTime());
       this.cdr.detectChanges();
     });
 
+    // Update counter on seek
     this.wave.on('seek', () => {
-      console.log(this.wave.getCurrentTime())
       this.counter = this.formatTime(this.wave.getCurrentTime());
       this.cdr.detectChanges();
     });
@@ -165,77 +75,17 @@ export class HomeComponent implements OnInit {
 
   createChart() {
     let ctx = document.getElementById('myChart') as HTMLCanvasElement;
-    ctx.parentElement.style.height = '100px';
+    ctx.parentElement.style.height = '50px';
 
-    let dur = this.wave.getDuration();
+    // Todo: pass into chart config as argument
+    // let dur = this.wave.getDuration();
 
-    let chart = new Chart(ctx.getContext('2d'), {
-      type: 'scatter',
-      data: {
-        datasets: [{
-          data: [{
-            x: 12,
-            y: 1
-          }, {
-            x: 24,
-            y: 1
-          }, {
-            x: 72,
-            y: 1
-          }]
-        }]
-      },
-      options: {
-        maintainAspectRatio: false,
-        scales: {
-          xAxes: [{
-            type: 'linear',
-            position: 'bottom'
-          }],
-          yAxes: [{
-            ticks: {
-              min: 0,
-              max: 2,
-              stepSize: 2
-            }
-          }]
-        },
-        plugins: {
-          zoom: {
-            pan: {
-              enabled: true,
-              mode: 'x',
-              rangeMin: {
-                x: 0,
-              },
-              rangeMax: {
-                x: dur,
-              },
-            },
-            zoom: {
-              enabled: true,
-              mode: 'x',
-              rangeMin: {
-                x: 0,
-              },
-              rangeMax: {
-                x: dur,
-              },
-            }
-          }
-        },  
-      },
-    })
+    this.chart = new Chart(ctx.getContext('2d'), chartConfig)
   }
 
-  // addDivToWave() {
-  //   let div = document.createElement('div');
-  //   div.innerHTML = 'highlight';
-  //   div.setAttribute('position', 'absolute');
-  //   div.setAttribute('left', '61px');
-  //   div.setAttribute('top', '2px');
-  //   document.getElementById('waveform').appendChild(div);
-  // }
+  onResetZoom() {
+    this.chart.resetZoom();
+  }
 
   onHighlightClicked(highlight: Highlight) {
     console.log('added new highlight: ', highlight)
