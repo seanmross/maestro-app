@@ -9,7 +9,7 @@ import { HighlightService } from '../../services/highlight.service';
 
 import { Chart } from 'chart.js';
 import 'chartjs-plugin-zoom';
-import { chartConfig } from './constants/chart-config';
+import { ChartConfig } from './constants/chart-config';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +18,7 @@ import { chartConfig } from './constants/chart-config';
 })
 export class HomeComponent implements OnInit {
   wave: WaveSurfer;
-  chart: any;
+  chart: any; // Use type 'any' because method .resetZoom() doesn't exist on type 'Chart'
   waveReady = false;
   duration: string;
   counter: string;
@@ -74,13 +74,21 @@ export class HomeComponent implements OnInit {
   }
 
   createChart() {
-    let ctx = document.getElementById('myChart') as HTMLCanvasElement;
-    ctx.parentElement.style.height = '50px';
+    let canvas = document.getElementById('myChart') as HTMLCanvasElement;
+    let ctx = canvas.getContext('2d');
 
-    // Todo: pass into chart config as argument
-    // let dur = this.wave.getDuration();
+    // Create gradient
+    let gradient = ctx.createLinearGradient(0, 0, 0, 200);
+    gradient.addColorStop(0, "white");
+    gradient.addColorStop(1, "green");
 
-    this.chart = new Chart(ctx.getContext('2d'), chartConfig)
+    // Get episode duration
+    let dur = this.wave.getDuration();
+
+    // Build a chart configuration
+    let chartConfig = new ChartConfig(dur, gradient);
+
+    this.chart = new Chart(ctx, chartConfig.config)
   }
 
   onResetZoom() {

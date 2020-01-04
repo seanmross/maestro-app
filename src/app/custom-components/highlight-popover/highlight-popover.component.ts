@@ -13,7 +13,7 @@ export class HighlightPopoverComponent implements OnInit {
   constructor() { }
 
   ngOnInit() {
-    console.log(this.highlights)
+    // console.log(this.highlights)
   }
 
   onHighlightClick(highlight: Highlight) {
