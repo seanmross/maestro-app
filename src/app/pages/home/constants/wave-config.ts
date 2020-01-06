@@ -4,8 +4,8 @@ import RegionsPlugin from 'wavesurfer.js/dist/plugin/wavesurfer.regions.min.js';
 
 export class WaveConfig {
 
-    constructor(data: any[]) {
-        let regions = this.createRegions(data);
+    constructor(regionData: any[]) {
+        let regions = this.createRegions(regionData);
         this.waveformConfig.plugins.push(regions);
     }
 

@@ -11,6 +11,12 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { ToolbarComponent } from './custom-components/toolbar/toolbar.component';
 import { HighlightPopoverComponent } from './custom-components/highlight-popover/highlight-popover.component';
 import { HighlightService } from './services/highlight.service';
+import { WaveplayerComponent } from './custom-components/waveplayer/waveplayer.component';
+import { WaveformComponent } from './custom-components/waveform/waveform.component';
+import { ChartComponent } from './chart/chart.component';
+import { PlaybackComponent } from './custom-components/playback/playback.component';
+import { HighlightListComponent } from './custom-components/highlight-list/highlight-list.component';
+import { EpisodeService } from './services/episode.service';
 
 @NgModule({
   declarations: [
@@ -18,6 +24,11 @@ import { HighlightService } from './services/highlight.service';
     HomeComponent,
     ToolbarComponent,
     HighlightPopoverComponent,
+    WaveplayerComponent,
+    WaveformComponent,
+    ChartComponent,
+    PlaybackComponent,
+    HighlightListComponent,
   ],
   imports: [
     LayoutModule,
@@ -26,7 +37,10 @@ import { HighlightService } from './services/highlight.service';
     AppRoutingModule,
     BrowserAnimationsModule
   ],
-  providers: [HighlightService],
+  providers: [
+    EpisodeService,
+    HighlightService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

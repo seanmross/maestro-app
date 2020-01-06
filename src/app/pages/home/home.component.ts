@@ -8,22 +8,22 @@ import { Chart } from 'chart.js';
 import 'chartjs-plugin-zoom';
 import { ChartConfig } from './constants/chart-config';
 
-const waveData = [
+const regionData = [
   {
     start: 12,
-    end: 12.25,
+    end: 15,
     loop: false,
     color: 'hsla(200, 50%, 70%, 0.4)'
   },
   {
     start: 24,
-    end: 24.25,
+    end: 30,
     loop: false,
     color: 'hsla(200, 50%, 70%, 0.4)'
   },
   {
-    start: 72,
-    end: 72.25,
+    start: 36,
+    end: 40,
     loop: false,
     color: 'hsla(200, 50%, 70%, 0.4)'
   }
@@ -39,7 +39,7 @@ const chartData = [
     y: 1
   },
   {
-    x: 72,
+    x: 36,
     y: 1
   }
 ];
@@ -67,7 +67,7 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    let wave = new WaveConfig(waveData);
+    let wave = new WaveConfig(regionData);
     this.wave = WaveSurfer.create(wave.config);
 
     /**
@@ -81,7 +81,7 @@ export class HomeComponent implements OnInit {
       this.duration = this.getDuration();
       this.counter = '0:00';
       
-      this.highlights = this.hlService.getHighlights();
+      this.highlights = this.hlService.getHighlights(0);
       
       this.createChart();
       this.cdr.detectChanges();
@@ -104,7 +104,7 @@ export class HomeComponent implements OnInit {
       this.cdr.detectChanges();
     });
 
-    this.wave.load('assets/mp3/akshay_nanavati.mp3');
+    this.wave.load('assets/mp3/jordan_harbinger_289.mp3');
   }
 
   createChart() {
@@ -131,7 +131,7 @@ export class HomeComponent implements OnInit {
   onHighlightClicked(highlight: Highlight) {
     console.log('added new highlight: ', highlight)
     this.activeHlText = highlight.text;
-    this.activeHlTime = this.formatTime(highlight.timeSeconds);
+    this.activeHlTime = this.formatTime(highlight.timeStart);
     this.cdr.detectChanges();
   }
 
@@ -144,7 +144,8 @@ export class HomeComponent implements OnInit {
     this.highlights.push({
       id: nextId,
       episodeId: 0,
-      timeSeconds: 0,
+      timeStart: 0,
+      timeEnd: 0,
       text: `I am a new highlight. My highlight id is: ${nextId}`
     });
     this.cdr.detectChanges();
