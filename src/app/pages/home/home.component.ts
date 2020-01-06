@@ -1,15 +1,48 @@
 import { Component, OnInit, ChangeDetectorRef, Renderer2 } from '@angular/core';
 import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
-
 import WaveSurfer from 'wavesurfer.js';
-import { waveConfig } from './constants/wave-config';
-
+import { WaveConfig } from './constants/wave-config';
 import { Highlight } from '../../shared/highlight';
 import { HighlightService } from '../../services/highlight.service';
-
 import { Chart } from 'chart.js';
 import 'chartjs-plugin-zoom';
 import { ChartConfig } from './constants/chart-config';
+
+const waveData = [
+  {
+    start: 12,
+    end: 12.25,
+    loop: false,
+    color: 'hsla(200, 50%, 70%, 0.4)'
+  },
+  {
+    start: 24,
+    end: 24.25,
+    loop: false,
+    color: 'hsla(200, 50%, 70%, 0.4)'
+  },
+  {
+    start: 72,
+    end: 72.25,
+    loop: false,
+    color: 'hsla(200, 50%, 70%, 0.4)'
+  }
+];
+
+const chartData = [
+  {
+    x: 12,
+    y: 1
+  },
+  {
+    x: 24,
+    y: 1
+  },
+  {
+    x: 72,
+    y: 1
+  }
+];
 
 @Component({
   selector: 'app-home',
@@ -34,7 +67,8 @@ export class HomeComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.wave = WaveSurfer.create(waveConfig);
+    let wave = new WaveConfig(waveData);
+    this.wave = WaveSurfer.create(wave.config);
 
     /**
      * Manually detect changes using cdr
@@ -42,14 +76,14 @@ export class HomeComponent implements OnInit {
      */
     this.wave.on('ready', () => {
       this.waveReady = true;
-      this.wave.setHeight(200);
+      this.wave.setHeight(160);
+
       this.duration = this.getDuration();
       this.counter = '0:00';
+      
       this.highlights = this.hlService.getHighlights();
-      this.cdr.detectChanges();
-
+      
       this.createChart();
-
       this.cdr.detectChanges();
     });
 
@@ -77,21 +111,20 @@ export class HomeComponent implements OnInit {
     let canvas = document.getElementById('myChart') as HTMLCanvasElement;
     let ctx = canvas.getContext('2d');
 
-    // Create gradient
-    let gradient = ctx.createLinearGradient(0, 0, 0, 200);
-    gradient.addColorStop(0, "white");
-    gradient.addColorStop(1, "green");
+    // Todo: create gradient
+    // let gradient = ctx.createLinearGradient(0, 0, 0, 200);
+    // gradient.addColorStop(0, "white");
+    // gradient.addColorStop(1, "green");
 
     // Get episode duration
     let dur = this.wave.getDuration();
 
-    // Build a chart configuration
-    let chartConfig = new ChartConfig(dur, gradient);
-
-    this.chart = new Chart(ctx, chartConfig.config)
+    // Build chart
+    let chart = new ChartConfig(dur, chartData);
+    this.chart = new Chart(ctx, chart.config);
   }
 
-  onResetZoom() {
+  onResetChartZoom() {
     this.chart.resetZoom();
   }
 

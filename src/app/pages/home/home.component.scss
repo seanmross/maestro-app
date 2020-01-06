@@ -63,7 +63,7 @@
     &--counter,
     &--duration {
         font-size: 14px;
-        padding-top: 92px;
+        padding-top: 72px;
         width: 65px;
     }
     &--counter {
@@ -80,6 +80,17 @@
 #wave-minimap {
     cursor: pointer;
     position: relative; // !! Wihout this, cursor position is out of place
+}
+
+.chart-container {
+    position: relative; 
+    height: 50px;
+    &--ready {
+        display: block;
+    }
+    &--loading {
+        display: none;
+    }
 }
 
 .playback-container {

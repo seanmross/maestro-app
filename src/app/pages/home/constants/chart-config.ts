@@ -1,38 +1,29 @@
-
-
 export class ChartConfig {
-
-    constructor(episodeDuration: string, fillColor: any) {
+    constructor(episodeDuration: string, data: any[]) {
         this.chartJSConfig.options.scales.xAxes[0].ticks.max = parseInt(episodeDuration);
-        this.chartJSConfig.data.datasets[0].fillColor = fillColor;
+        // this.chartJSConfig.data.datasets[0].fillColor = fillColor;
         this.chartJSConfig.options.plugins.zoom.pan.rangeMax.x = parseInt(episodeDuration);
         this.chartJSConfig.options.plugins.zoom.zoom.rangeMax.x = parseInt(episodeDuration);
+        this.chartJSConfig.data.datasets[0].data = data;
     }
 
     get config() {
         return this.chartJSConfig;
     }
 
+    updateData(data: any[]) {
+        this.chartJSConfig.data.datasets[0].data = data;
+    }
+
     chartJSConfig = {
         type: 'scatter',
         data: {
             datasets: [{
-                data: [{
-                    x: 12,
-                    y: 1
-                },
-                {
-                    x: 24,
-                    y: 1
-                },
-                {
-                    x: 72,
-                    y: 1
-                }],
+                data: [],
                 fillColor: '',
                 pointRadius: 6,
                 pointHoverRadius: 8,
-                pointBackgroundColor: 'hsla(130, 70%, 70%, 0.4)'
+                pointBackgroundColor: 'hsla(200, 50%, 70%, 0.4)'
             }]
         },
         options: {
@@ -49,7 +40,6 @@ export class ChartConfig {
                         display: false
                     },
                     gridLines: {
-                        // display: false,
                         drawTicks: false,
                         drawBorder: false
                     },
