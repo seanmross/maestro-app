@@ -9,10 +9,10 @@ import { HomeComponent } from './pages/home/home.component';
 import { MaterialModule } from './material/material.module';
 import { LayoutModule } from '@angular/cdk/layout';
 import { ToolbarComponent } from './custom-components/toolbar/toolbar.component';
-import { HighlightPopoverComponent } from './custom-components/highlight-popover/highlight-popover.component';
+import { HighlightReelComponent } from './custom-components/highlight-reel/highlight-reel.component';
 import { HighlightService } from './services/highlight.service';
-import { WaveplayerComponent } from './custom-components/waveplayer/waveplayer.component';
-import { WaveformComponent } from './custom-components/waveform/waveform.component';
+import { PodReelPlayerComponent } from './custom-components/pod-reel-player/pod-reel-player.component';
+import { WavesurferComponent } from './custom-components/wavesurfer/wavesurfer.component';
 import { ChartComponent } from './chart/chart.component';
 import { PlaybackComponent } from './custom-components/playback/playback.component';
 import { HighlightListComponent } from './custom-components/highlight-list/highlight-list.component';
@@ -23,9 +23,9 @@ import { EpisodeService } from './services/episode.service';
     AppComponent,
     HomeComponent,
     ToolbarComponent,
-    HighlightPopoverComponent,
-    WaveplayerComponent,
-    WaveformComponent,
+    HighlightReelComponent,
+    PodReelPlayerComponent,
+    WavesurferComponent,
     ChartComponent,
     PlaybackComponent,
     HighlightListComponent,

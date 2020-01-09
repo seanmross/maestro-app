@@ -1,0 +1,19 @@
+<!-- Active highlight -->
+<!-- <div class="active-hl-banner">
+    <div class="active-hl-banner--top">{{ activeHlText }}</div>
+    <div class="active-hl-banner--bottom">
+        <mat-icon *ngIf="activeHlTime" [inline]="true">mic</mat-icon>
+        <div *ngIf="activeHlTime">({{ activeHlTime }})</div>
+    </div>
+</div> -->
+
+<!-- Player area -->
+<div class="player-area">
+    <!-- Waveform -->
+    <app-wavesurfer [highlights]="highlights" [episode]="episode"></app-wavesurfer>
+    
+    <!-- Playback controls -->
+    <app-playback></app-playback>
+</div>
+
+<button mat-button (click)="onAddHighlight()">add highlight</button>

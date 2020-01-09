@@ -1,0 +1,22 @@
+<!-- <button mat-icon-button
+    type="button" 
+    *ngFor="let hl of highlights; let i = index" 
+    name="highlight-{{i}}" 
+    (click)="onHighlightClick(hl)">
+    <mat-icon>mic</mat-icon>
+</button> -->
+
+
+<!-- Reset chart zoom -->
+<div style="display: flex;justify-content: center;">
+    <button mat-button (click)="onResetChartZoom()">Reset Reel Zoom</button>
+</div>
+<!-- Chart -->
+<div class="chart-container">
+    <canvas id="myChart" 
+        [ngClass]="{
+            'chart-container--ready': waveReady, 
+            'chart-container--loading': !waveReady
+        }">
+    </canvas>
+</div>

@@ -1,0 +1,33 @@
+// Import material theming functions
+@import '~@angular/material/theming';
+// Import custom theme to access color palettes
+@import 'app-material-theme';
+
+.chart-container {
+    position: relative; 
+    height: 50px;
+    &--ready {
+        display: block;
+    }
+    &--loading {
+        display: none;
+    }
+
+    background: #424242;
+    &:before {
+		position: absolute;
+		content: '';
+		width: 100%;
+		border: 2px dashed white;
+		top: 3px;
+		z-index: 3;
+	}
+	&:after {
+		position: absolute;
+		content: '';
+		width: 100%;
+		border: 2px dashed white;
+		bottom: 3px;
+		z-index: 3;
+	}
+}

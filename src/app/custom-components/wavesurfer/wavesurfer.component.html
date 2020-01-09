@@ -1,0 +1,21 @@
+<div class="waveform">
+    <div class="waveform--counter">{{ counter }}</div>
+    <div class="waveform--container">
+
+        <app-highlight-reel></app-highlight-reel>
+
+        <div class="waveform--wrapper">
+            <div class="waveform--loading">
+                <div *ngIf="!waveReady">Loading track...</div>
+                <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
+            </div>
+            <div id="waveform"></div>
+        </div>
+        <div id="wave-minimap"></div>
+        <!-- Highlights -->
+        <!-- <div class="waveform--highlight-popover" *ngIf="waveReady">
+            <app-highlight-popover [highlights]="highlights" (highlightClicked)="onHighlightClicked($event)"></app-highlight-popover>
+        </div> -->
+    </div>
+    <div class="waveform--duration">{{ duration }}</div>
+</div>

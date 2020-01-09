@@ -1,0 +1,58 @@
+// Import material theming functions
+@import '~@angular/material/theming';
+// Import custom theme to access color palettes
+@import 'app-material-theme';
+
+// .active-hl-banner {
+//     display: flex;
+//     flex-direction: column;
+//     padding: 0 1.5em;
+//     &--top {
+//         font-size: 2em;
+//         font-weight: 700;
+//         height: 172px;
+//         display: flex;
+//         align-items: flex-end;
+//         justify-content: center;
+//         text-align: center;
+//     } 
+//     &--bottom {
+//         display: flex;
+//         justify-content: center;
+//         align-items: center;
+//         padding-top: 0.5em;
+//         height: 56px;
+//         mat-icon {
+//             font-size: 48px;
+//         }
+//         div {
+//             font-size: 14px;
+//         }
+//     }
+// }
+
+.playback-container {
+    background: mat-color($app-background);
+}
+
+.playback-controls {
+    display: flex;
+    justify-content: center;
+}
+
+.mat-icon.playback-icon-l {
+    font-size: 48px;
+}
+
+.mat-icon.playback-icon-s {
+    font-size: 36px;
+}
+
+.playback-btn {
+    margin: 0 0.5em;
+}
+
+.play-pause {
+    height: 48px;
+    width: 48px;
+}

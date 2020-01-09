@@ -5,11 +5,11 @@ import { Episode } from 'src/app/shared/episode';
 import { EpisodeService } from 'src/app/services/episode.service';
 
 @Component({
-  selector: 'app-waveplayer',
-  templateUrl: './waveplayer.component.html',
-  styleUrls: ['./waveplayer.component.scss']
+  selector: 'app-pod-reel-player',
+  templateUrl: './pod-reel-player.component.html',
+  styleUrls: ['./pod-reel-player.component.scss']
 })
-export class WaveplayerComponent implements OnInit {
+export class PodReelPlayerComponent implements OnInit {
   highlights: Highlight[];
   episode: Episode;
   
