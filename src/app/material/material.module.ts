@@ -7,7 +7,6 @@ import {
     MatToolbarModule,
 } from "@angular/material";
 
-
 @NgModule({
     imports: [
         MatGridListModule,

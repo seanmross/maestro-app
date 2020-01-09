@@ -32,10 +32,10 @@ import { EpisodeService } from './services/episode.service';
   ],
   imports: [
     LayoutModule,
-    MaterialModule,
     BrowserModule,
     AppRoutingModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MaterialModule,
   ],
   providers: [
     EpisodeService,

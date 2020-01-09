@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectorRef, Renderer2 } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, Renderer2, ViewChild } from '@angular/core';
 import { Breakpoints, BreakpointObserver, BreakpointState } from '@angular/cdk/layout';
 import WaveSurfer from 'wavesurfer.js';
 import { WaveConfig } from './constants/wave-config';
@@ -60,6 +60,9 @@ export class HomeComponent implements OnInit {
 
   highlights: Highlight[];
 
+  @ViewChild('slider', { static: false }) slider:MatSlider;
+  @ViewChild('waveform', { static: false }) waveform: any;
+
   constructor(
     private cdr: ChangeDetectorRef,
     private renderer: Renderer2,
@@ -82,7 +85,7 @@ export class HomeComponent implements OnInit {
       this.counter = '0:00';
       
       this.highlights = this.hlService.getHighlights(0);
-      
+
       this.createChart();
       this.cdr.detectChanges();
     });

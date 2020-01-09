@@ -16,14 +16,10 @@
         <div class="waveform">
             <div class="waveform--counter">{{ counter }}</div>
             <div class="waveform--container">
-                <div class="waveform--wrapper">
-                    <div class="waveform--loading">
-                        <div *ngIf="!waveReady">Loading track...</div>
-                        <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
-                    </div>
-                    <div id="waveform"></div>
+                <!-- Reset chart zoom -->
+                <div style="display: flex;justify-content: center;">
+                    <button mat-button (click)="onResetChartZoom()">Reset Reel Zoom</button>
                 </div>
-                <div id="wave-minimap"></div>
                 <!-- Chart -->
                 <div class="chart-container">
                     <canvas id="myChart" 
@@ -33,9 +29,17 @@
                         }">
                     </canvas>
                 </div>
-                <div style="display: flex;justify-content: center;">
-                    <button mat-button (click)="onResetChartZoom()">Reset zoom</button>
+
+                <div class="waveform--wrapper">
+                    <div class="waveform--loading">
+                        <div *ngIf="!waveReady">Loading track...</div>
+                        <mat-progress-bar *ngIf="!waveReady" mode="buffer"></mat-progress-bar>
+                    </div>
+                    <div #waveform id="waveform"></div>
                 </div>
+                <div id="wave-minimap"></div>
+                
+                
 
                 <!-- Highlights -->
                 <!-- <div class="waveform--highlight-popover" *ngIf="waveReady">
