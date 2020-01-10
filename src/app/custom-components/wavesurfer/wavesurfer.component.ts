@@ -32,7 +32,7 @@ export class WavesurferComponent implements OnInit {
     //Called after ngAfterContentInit when the component's view has been initialized. Applies to components only.
     //Add 'implements AfterViewInit' to the class.
 
-    let regionData = this.createRegions(this.highlights)
+    let regionData = this.createRegions(this.highlights);
     let wave = new WaveConfig(regionData);
     this.wave = WaveSurfer.create(wave.config);
 

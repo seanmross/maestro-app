@@ -12,6 +12,7 @@ import { EpisodeService } from 'src/app/services/episode.service';
 export class PodReelPlayerComponent implements OnInit {
   highlights: Highlight[];
   episode: Episode;
+  waveReady = false;
   
   constructor(
     private hlService: HighlightService,

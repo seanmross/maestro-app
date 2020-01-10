@@ -13,7 +13,7 @@
     <app-wavesurfer [highlights]="highlights" [episode]="episode"></app-wavesurfer>
     
     <!-- Playback controls -->
-    <app-playback></app-playback>
+    <app-playback [waveReady]="waveReady"></app-playback>
 </div>
 
 <button mat-button (click)="onAddHighlight()">add highlight</button>

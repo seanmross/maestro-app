@@ -3,6 +3,7 @@ import { Highlight } from '../../shared/highlight';
 import { Chart } from 'chart.js';
 import 'chartjs-plugin-zoom';
 import { ChartConfig } from '../../pages/home/constants/chart-config';
+import { Episode } from '../../shared/episode';
 
 const chartData = [
   {
@@ -26,7 +27,9 @@ const chartData = [
 })
 export class HighlightReelComponent implements OnInit {
   @Input() highlights: Highlight[];
-  @Output() highlightClicked: EventEmitter<Highlight> = new EventEmitter();
+  @Input() episode: Episode;
+  // @Output() highlightClicked: EventEmitter<Highlight> = new EventEmitter();
+  chart: any;
   
   constructor() { }
 
@@ -34,16 +37,17 @@ export class HighlightReelComponent implements OnInit {
     // console.log(this.highlights)
   }
 
-  onHighlightClick(highlight: Highlight) {
-    this.highlightClicked.emit(highlight)
-  }
+  // onHighlightClick(highlight: Highlight) {
+  //   this.highlightClicked.emit(highlight)
+  // }
 
   createChart() {
     let canvas = document.getElementById('myChart') as HTMLCanvasElement;
     let ctx = canvas.getContext('2d');
 
     // Get episode duration
-    let dur = this.wave.getDuration();
+    // let dur = this.wave.getDuration();
+    let dur = this.episode.audioLength;
 
     // Build chart
     let chart = new ChartConfig(dur, chartData);

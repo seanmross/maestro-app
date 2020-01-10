@@ -1,9 +1,9 @@
 export class ChartConfig {
-    constructor(episodeDuration: string, data: any[]) {
-        this.chartJSConfig.options.scales.xAxes[0].ticks.max = parseInt(episodeDuration);
+    constructor(episodeDuration: number, data: any[]) {
+        this.chartJSConfig.options.scales.xAxes[0].ticks.max = episodeDuration;
         // this.chartJSConfig.data.datasets[0].fillColor = fillColor;
-        this.chartJSConfig.options.plugins.zoom.pan.rangeMax.x = parseInt(episodeDuration);
-        this.chartJSConfig.options.plugins.zoom.zoom.rangeMax.x = parseInt(episodeDuration);
+        this.chartJSConfig.options.plugins.zoom.pan.rangeMax.x = episodeDuration;
+        this.chartJSConfig.options.plugins.zoom.zoom.rangeMax.x = episodeDuration;
         this.chartJSConfig.data.datasets[0].data = data;
     }
 
